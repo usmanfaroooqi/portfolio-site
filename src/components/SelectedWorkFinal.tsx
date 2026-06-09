@@ -1,10 +1,11 @@
 const selectedProjects = [
     {
       number: "01",
-      title: "NEXORA",
-      tags: "Branding • Web Design • UI/UX",
-      image: "",
-      theme: "nexora",
+      title: "LARANA, INC",
+      tags: "Business Card • Real Estate • Brand Collateral",
+      image: "/projects/larana-real-estate-card.jpg",
+      theme: "larana",
+      link: "/projects/larana-real-estate-card.jpg",
     },
     {
       number: "02",
@@ -30,8 +31,8 @@ const selectedProjects = [
   ];
   
   export default function SelectedWorkFinal() {
-    const openProjects = () => {
-      window.location.href = "/projects";
+    const openProject = (link?: string) => {
+      window.location.href = link || "/projects";
     };
   
     return (
@@ -182,6 +183,10 @@ const selectedProjects = [
             text-transform: uppercase;
           }
   
+          .sw-final-card--larana .sw-final-card__visual {
+            background: #111827;
+          }
+
           .sw-final-card--nexora .sw-final-card__visual {
             background:
               radial-gradient(circle at 68% 48%, rgba(59, 130, 246, 0.70), transparent 32%),
@@ -364,8 +369,8 @@ const selectedProjects = [
                 type="button"
                 className={`sw-final-card sw-final-card--${project.theme}`}
                 key={project.title}
-                onClick={openProjects}
-                aria-label={`View all projects including ${project.title}`}
+                onClick={() => openProject(project.link)}
+                aria-label={`View project ${project.title}`}
               >
                 <div className="sw-final-card__visual">
                   {project.image ? (
@@ -385,7 +390,7 @@ const selectedProjects = [
                   <p className="sw-final-card__tags">{project.tags}</p>
   
                   <span className="sw-final-card__view">
-                    View All
+                    View Project
                     <span>→</span>
                   </span>
                 </div>
