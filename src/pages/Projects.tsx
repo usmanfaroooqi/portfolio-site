@@ -16,19 +16,60 @@ import { DustLayer } from "@/components/DustLayer";
 const allProjects = [
   {
     number: "01",
-    title: "Larana, Inc",
+    title: "LARANA, INC",
     cats: "Business Card • Real Estate • Brand Collateral",
     visual: "larana",
     image: "/projects/larana-real-estate-card.jpg",
-    link: "/projects/larana-real-estate-card.jpg",
   },
-  { number: "02", title: "Lumina", cats: "Branding • Packaging • Art Direction", visual: "lumina" },
-  { number: "03", title: "Aurea", cats: "Branding • Print • Art Direction", visual: "aurea" },
-  { number: "04", title: "Pulse", cats: "App Design • UI/UX • Branding", visual: "pulse" },
-  { number: "05", title: "Orbit Studio", cats: "Branding • Visual Identity", visual: "orbit" },
-  { number: "06", title: "Nova Cafe", cats: "Packaging • Social Media", visual: "nova" },
-  { number: "07", title: "BlueMark", cats: "Logo Design • Brand System", visual: "blue" },
-  { number: "08", title: "Motion Lab", cats: "Motion Graphics • Digital", visual: "motion" },
+  {
+    number: "02",
+    title: "Lumina",
+    cats: "Branding • Packaging • Art Direction",
+    visual: "lumina",
+    image: "",
+  },
+  {
+    number: "03",
+    title: "Aurea",
+    cats: "Branding • Print • Art Direction",
+    visual: "aurea",
+    image: "",
+  },
+  {
+    number: "04",
+    title: "Pulse",
+    cats: "App Design • UI/UX • Branding",
+    visual: "pulse",
+    image: "",
+  },
+  {
+    number: "05",
+    title: "Orbit Studio",
+    cats: "Branding • Visual Identity",
+    visual: "orbit",
+    image: "",
+  },
+  {
+    number: "06",
+    title: "Nova Cafe",
+    cats: "Packaging • Social Media",
+    visual: "nova",
+    image: "",
+  },
+  {
+    number: "07",
+    title: "BlueMark",
+    cats: "Logo Design • Brand System",
+    visual: "blue",
+    image: "",
+  },
+  {
+    number: "08",
+    title: "Motion Lab",
+    cats: "Motion Graphics • Digital",
+    visual: "motion",
+    image: "",
+  },
 ];
 
 const projectNavItems = [
@@ -56,7 +97,11 @@ function MenuClock() {
 
   return (
     <span className="projects-menu-clock">
-      {hh}<span>:</span>{mm}<span>:</span><strong>{ss}</strong>
+      {hh}
+      <span>:</span>
+      {mm}
+      <span>:</span>
+      <strong>{ss}</strong>
     </span>
   );
 }
@@ -73,17 +118,23 @@ function MobileLiquidMenu({
   if (!isOpen) return null;
 
   return (
-    <nav className="projects-mobile-menu is-open" aria-label="Mobile menu">
-      <div className="projects-mobile-menu__quick-row">
-        <a href="/" aria-label="Go to home" onClick={() => setIsOpen(false)}>
+    <div className="projects-liquid-menu">
+      <div className="projects-liquid-menu__quick-row">
+        <a href="/" aria-label="Go home" onClick={() => setIsOpen(false)}>
           <HomeIcon size={16} strokeWidth={2} />
         </a>
-        <a href="/contact" aria-label="Open contact" onClick={() => setIsOpen(false)}>
+
+        <a
+          href="/contact"
+          aria-label="Open contact"
+          onClick={() => setIsOpen(false)}
+        >
           <MessageCircle size={16} strokeWidth={2} />
         </a>
+
         <button
           type="button"
-          aria-label="Show current time"
+          aria-label="Toggle clock"
           onClick={() => setClockOpen((value) => !value)}
         >
           <Clock3 size={16} strokeWidth={2} />
@@ -91,27 +142,30 @@ function MobileLiquidMenu({
       </div>
 
       {clockOpen && (
-        <div className="projects-mobile-menu__clock-popover" aria-live="polite">
-          <span>Local time</span>
+        <div className="projects-liquid-menu__clock">
           <MenuClock />
         </div>
       )}
 
-      <div className="projects-mobile-menu__divider" />
+      <div className="projects-liquid-menu__divider" />
 
-      <div className="projects-mobile-menu__links">
+      <nav className="projects-liquid-menu__links" aria-label="Projects menu">
         {projectNavItems.map((item) => {
           const Icon = item.icon;
 
           return (
-            <a key={item.label} href={item.href} onClick={() => setIsOpen(false)}>
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+            >
               <Icon size={19} strokeWidth={2} />
               <span>{item.label}</span>
             </a>
           );
         })}
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 }
 
@@ -181,6 +235,13 @@ export default function Projects() {
           background-size: 200px 200px;
         }
 
+        .projects-dust-layer {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+
         .projects-fixed-topbar {
           position: fixed;
           top: 20px;
@@ -213,28 +274,18 @@ export default function Projects() {
         }
 
         .projects-back-home {
-          width: 54px;
-          height: 54px;
-          min-height: 54px;
-          padding: 0;
-          border-radius: 999px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          width: 54px;
+          height: 54px;
+          border-radius: 999px;
           text-decoration: none;
           color: #2563eb;
-          font-size: 16px;
-          font-weight: 850;
-          white-space: nowrap;
-        }
-
-        .projects-back-home svg {
-          width: 25px;
-          height: 25px;
         }
 
         .projects-menu-button {
-          display: none;
+          display: inline-flex;
           width: 54px;
           height: 54px;
           border-radius: 999px;
@@ -244,110 +295,93 @@ export default function Projects() {
           cursor: pointer;
         }
 
-        .projects-mobile-menu {
+        .projects-liquid-menu {
           position: fixed;
           top: 86px;
           right: 16px;
           z-index: 99998;
-          width: min(270px, calc(100vw - 32px));
-          padding: 15px;
+          width: min(280px, calc(100vw - 32px));
+          padding: 14px;
           border-radius: 26px;
-          display: none;
-          backdrop-filter: blur(30px) saturate(175%);
-          -webkit-backdrop-filter: blur(30px) saturate(175%);
+          backdrop-filter: blur(26px) saturate(170%);
+          -webkit-backdrop-filter: blur(26px) saturate(170%);
           background:
             linear-gradient(
               180deg,
-              rgba(255, 255, 255, 0.70) 0%,
-              rgba(255, 255, 255, 0.38) 100%
+              rgba(255, 255, 255, 0.54) 0%,
+              rgba(255, 255, 255, 0.28) 100%
             );
-          border: 1px solid rgba(255, 255, 255, 0.78);
+          border: 1px solid rgba(255, 255, 255, 0.68);
           box-shadow:
-            0 24px 66px rgba(15, 23, 42, 0.16),
-            inset 0 1px 0 rgba(255, 255, 255, 0.92),
-            inset 0 -1px 0 rgba(15, 23, 42, 0.08);
-          animation: projectsMobileMenuIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+            0 24px 58px rgba(15, 23, 42, 0.16),
+            inset 0 1px 0 rgba(255, 255, 255, 0.88);
         }
 
-        .projects-mobile-menu.is-open {
-          display: block;
+        .projects-liquid-menu__quick-row {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
         }
 
-        .projects-mobile-menu__quick-row {
-          display: flex;
-          align-items: center;
-          justify-content: space-around;
-          margin-bottom: 12px;
-        }
-
-        .projects-mobile-menu__quick-row a,
-        .projects-mobile-menu__quick-row button {
-          width: 36px;
-          height: 36px;
+        .projects-liquid-menu__quick-row a,
+        .projects-liquid-menu__quick-row button {
+          height: 42px;
+          border: 0;
           border-radius: 999px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          color: #0f172a;
-          text-decoration: none;
+          color: #2563eb;
+          background: rgba(255, 255, 255, 0.52);
           cursor: pointer;
+          text-decoration: none;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84);
+        }
+
+        .projects-liquid-menu__clock {
+          margin-top: 10px;
+          padding: 10px 12px;
+          border-radius: 18px;
+          color: #0f172a;
           background: rgba(255, 255, 255, 0.42);
-          border: 1px solid rgba(255, 255, 255, 0.70);
+          font-weight: 900;
+          text-align: center;
         }
 
-        .projects-mobile-menu__divider {
+        .projects-menu-clock span {
+          color: #2563eb;
+          margin: 0 3px;
+        }
+
+        .projects-menu-clock strong {
+          color: #2563eb;
+        }
+
+        .projects-liquid-menu__divider {
           height: 1px;
-          background: rgba(15, 23, 42, 0.08);
-          margin-bottom: 8px;
+          margin: 12px 0;
+          background: rgba(148, 163, 184, 0.22);
         }
 
-        .projects-mobile-menu__links {
+        .projects-liquid-menu__links {
           display: grid;
-          gap: 2px;
+          gap: 6px;
         }
 
-        .projects-mobile-menu__links a {
-          min-height: 44px;
-          padding: 0 6px;
-          border-radius: 0;
+        .projects-liquid-menu__links a {
           display: flex;
           align-items: center;
-          justify-content: flex-start;
-          gap: 13px;
+          gap: 11px;
+          padding: 13px 14px;
+          border-radius: 16px;
           text-decoration: none;
           color: #0f172a;
-          font-size: 17px;
           font-weight: 850;
-          letter-spacing: -0.02em;
+          font-size: 14px;
         }
 
-        .projects-mobile-menu__links a svg {
-          color: #2563eb;
-          opacity: 0.86;
-        }
-
-        .projects-mobile-menu__links a:hover {
-          background: transparent;
-        }
-
-        @keyframes projectsMobileMenuIn {
-          from {
-            opacity: 0;
-            transform: translateY(-8px) scale(0.96);
-            filter: blur(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-          }
-        }
-
-        .projects-dust-layer {
-          position: fixed;
-          inset: 0;
-          z-index: 0;
-          pointer-events: none;
+        .projects-liquid-menu__links a:hover {
+          background: rgba(255, 255, 255, 0.42);
         }
 
         .projects-clean-inner {
@@ -414,113 +448,93 @@ export default function Projects() {
         }
 
         .projects-clean-intro {
-          max-width: 680px;
+          margin: 0 0 38px;
+          max-width: 720px;
           color: #64748b;
-          font-size: clamp(18px, 2vw, 23px);
+          font-size: 19px;
           line-height: 1.55;
-          margin: 0 0 54px;
-          font-weight: 500;
+          font-weight: 650;
         }
 
         .projects-clean-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 28px;
+          gap: 22px;
         }
 
         .projects-clean-card {
           overflow: hidden;
-          border-radius: 24px;
-          background: rgba(255, 255, 255, 0.92);
-          border: 1px solid rgba(255, 255, 255, 0.94);
+          border-radius: 32px;
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.68) 0%,
+              rgba(255, 255, 255, 0.34) 100%
+            );
+          border: 1px solid rgba(255, 255, 255, 0.70);
           box-shadow:
-            0 24px 60px rgba(15, 23, 42, 0.075),
-            0 8px 20px rgba(15, 23, 42, 0.035);
+            0 24px 58px rgba(15, 23, 42, 0.10),
+            inset 0 1px 0 rgba(255, 255, 255, 0.90);
         }
 
         .projects-clean-card__visual {
           position: relative;
-          height: 270px;
+          width: 100%;
+          aspect-ratio: 1600 / 1000;
           overflow: hidden;
+          border-radius: 32px 32px 0 0;
+          background:
+            radial-gradient(circle at 24% 20%, rgba(255, 255, 255, 0.92), transparent 34%),
+            linear-gradient(135deg, #eaf1ff 0%, #dbeafe 48%, #f8fafc 100%);
         }
 
         .projects-clean-card__visual img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
           display: block;
+          object-fit: contain;
+          object-position: center;
+          background: #eef3fb;
         }
 
-        .projects-clean-card__visual.has-image::after {
-          display: none;
-        }
-
-        .projects-clean-card__visual.larana {
-          background: #111827;
-        }
-
-        .projects-clean-card__visual.nexora,
-        .projects-clean-card__visual.pulse,
-        .projects-clean-card__visual.motion {
-          background:
-            radial-gradient(circle at 70% 48%, rgba(59, 130, 246, 0.42), transparent 24%),
-            linear-gradient(135deg, #020617 0%, #0f172a 54%, #1e3a8a 100%);
-        }
-
-        .projects-clean-card__visual.lumina,
-        .projects-clean-card__visual.blue {
-          background:
-            radial-gradient(circle at 82% 20%, rgba(191, 219, 254, 0.82), transparent 34%),
-            linear-gradient(135deg, #f8fafc 0%, #e0f2fe 48%, #ffffff 100%);
-        }
-
-        .projects-clean-card__visual.aurea,
-        .projects-clean-card__visual.nova,
-        .projects-clean-card__visual.orbit {
-          background:
-            radial-gradient(circle at 78% 28%, rgba(245, 158, 11, 0.18), transparent 30%),
-            linear-gradient(135deg, #f8fafc 0%, #e7dccb 48%, #ffffff 100%);
-        }
-
-        .projects-clean-card__visual::after {
-          content: attr(data-title);
+        .projects-clean-card__visual-placeholder {
           position: absolute;
-          left: 38px;
-          top: 40px;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
           color: #071225;
-          font-size: 32px;
-          font-weight: 800;
-          letter-spacing: 0.08em;
+          font-family: "Orbitron", "Michroma", "Inter", system-ui, sans-serif;
+          font-size: clamp(28px, 4vw, 44px);
+          line-height: 0.95;
+          font-weight: 850;
+          letter-spacing: -0.07em;
+          text-align: center;
           text-transform: uppercase;
         }
 
-        .projects-clean-card__visual.nexora::after,
-        .projects-clean-card__visual.pulse::after,
-        .projects-clean-card__visual.motion::after {
-          color: white;
-        }
-
         .projects-clean-card__content {
-          min-height: 136px;
-          padding: 28px 32px 30px;
-          background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(248,250,252,0.97));
+          padding: 28px 30px 30px;
         }
 
         .projects-clean-card__number {
           display: block;
           margin-bottom: 12px;
           color: #2563eb;
-          font-size: 13px;
-          font-weight: 800;
+          font-size: 19px;
+          font-weight: 950;
+          letter-spacing: 0.06em;
         }
 
         .projects-clean-card__title {
-          margin: 0 0 12px;
+          margin: 0 0 10px;
           color: #071225;
           font-family: "Orbitron", "Michroma", "Inter", system-ui, sans-serif;
           font-size: 34px;
-          line-height: 1;
-          letter-spacing: -0.06em;
+          line-height: 0.95;
+          font-weight: 900;
+          letter-spacing: -0.065em;
           text-transform: uppercase;
         }
 
@@ -528,8 +542,9 @@ export default function Projects() {
           margin: 0;
           color: #2563eb;
           font-size: 13px;
-          font-weight: 800;
-          letter-spacing: 0.12em;
+          line-height: 1.4;
+          font-weight: 900;
+          letter-spacing: 0.10em;
           text-transform: uppercase;
         }
 
@@ -546,10 +561,6 @@ export default function Projects() {
             left: 18px;
             right: 18px;
           }
-
-          .projects-menu-button {
-            display: inline-flex;
-          }
         }
 
         @media (max-width: 520px) {
@@ -563,14 +574,7 @@ export default function Projects() {
             right: 16px;
           }
 
-          .projects-back-home {
-            width: 50px;
-            height: 50px;
-            min-height: 50px;
-            padding: 0;
-            font-size: 15px;
-          }
-
+          .projects-back-home,
           .projects-menu-button {
             width: 50px;
             height: 50px;
@@ -584,14 +588,13 @@ export default function Projects() {
             font-size: 17px;
           }
 
-          .projects-clean-card__visual {
-            height: 230px;
+          .projects-clean-card {
+            border-radius: 26px;
           }
 
-          .projects-clean-card__visual::after {
-            left: 26px;
-            top: 30px;
-            font-size: 26px;
+          .projects-clean-card__visual {
+            aspect-ratio: 1600 / 1000;
+            border-radius: 26px 26px 0 0;
           }
 
           .projects-clean-card__content {
@@ -625,14 +628,15 @@ export default function Projects() {
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           onClick={() => setMenuOpen((value) => !value)}
         >
-          {menuOpen ? <X size={24} strokeWidth={2.2} /> : <Menu size={24} strokeWidth={2.2} />}
+          {menuOpen ? (
+            <X size={24} strokeWidth={2.2} />
+          ) : (
+            <Menu size={24} strokeWidth={2.2} />
+          )}
         </button>
       </div>
 
-      <MobileLiquidMenu
-        isOpen={menuOpen}
-        setIsOpen={setMenuOpen}
-      />
+      <MobileLiquidMenu isOpen={menuOpen} setIsOpen={setMenuOpen} />
 
       <div className="projects-clean-inner">
         <div className="projects-clean-eyebrow">All Projects</div>
@@ -647,23 +651,24 @@ export default function Projects() {
         <div className="projects-clean-grid">
           {allProjects.map((project) => (
             <article className="projects-clean-card" key={project.title}>
-              <a
-                className={`projects-clean-card__visual ${project.visual} ${project.image ? "has-image" : ""}`}
-                data-title={project.title}
-                href={project.link || "/projects"}
-                target={project.link?.startsWith("http") ? "_blank" : undefined}
-                rel={project.link?.startsWith("http") ? "noreferrer" : undefined}
-                aria-label={`View ${project.title}`}
-              >
+              <div className={`projects-clean-card__visual ${project.visual}`}>
                 {project.image ? (
                   <img src={project.image} alt={project.title} />
-                ) : null}
-              </a>
+                ) : (
+                  <div className="projects-clean-card__visual-placeholder">
+                    {project.title}
+                  </div>
+                )}
+              </div>
 
               <div className="projects-clean-card__content">
-                <span className="projects-clean-card__number">{project.number}</span>
+                <span className="projects-clean-card__number">
+                  {project.number}
+                </span>
 
-                <h2 className="projects-clean-card__title">{project.title}</h2>
+                <h2 className="projects-clean-card__title">
+                  {project.title}
+                </h2>
 
                 <p className="projects-clean-card__cats">{project.cats}</p>
               </div>
@@ -673,4 +678,4 @@ export default function Projects() {
       </div>
     </main>
   );
-}
+      }
