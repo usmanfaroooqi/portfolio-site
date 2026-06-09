@@ -1,13 +1,12 @@
 import {
   ChevronLeft,
+  Clock3,
   FolderKanban,
   HomeIcon,
   Mail,
   Menu,
   MessageCircle,
-  Moon,
   Sparkles,
-  Sun,
   UserRound,
   X,
 } from "lucide-react";
@@ -15,7 +14,14 @@ import { useEffect, useRef, useState } from "react";
 import { DustLayer } from "@/components/DustLayer";
 
 const allProjects = [
-  { number: "01", title: "Nexora", cats: "Branding • Web Design • UI/UX", visual: "nexora" },
+  {
+    number: "01",
+    title: "Larana, Inc",
+    cats: "Business Card • Real Estate • Brand Collateral",
+    visual: "larana",
+    image: "/projects/larana-real-estate-card.jpg",
+    link: "/projects/larana-real-estate-card.jpg",
+  },
   { number: "02", title: "Lumina", cats: "Branding • Packaging • Art Direction", visual: "lumina" },
   { number: "03", title: "Aurea", cats: "Branding • Print • Art Direction", visual: "aurea" },
   { number: "04", title: "Pulse", cats: "App Design • UI/UX • Branding", visual: "pulse" },
@@ -33,17 +39,37 @@ const projectNavItems = [
   { label: "Contact", href: "/contact", icon: Mail },
 ];
 
+function MenuClock() {
+  const [time, setTime] = useState(() => new Date());
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => window.clearInterval(id);
+  }, []);
+
+  const hh = String(time.getHours()).padStart(2, "0");
+  const mm = String(time.getMinutes()).padStart(2, "0");
+  const ss = String(time.getSeconds()).padStart(2, "0");
+
+  return (
+    <span className="projects-menu-clock">
+      {hh}<span>:</span>{mm}<span>:</span><strong>{ss}</strong>
+    </span>
+  );
+}
+
 function MobileLiquidMenu({
   isOpen,
   setIsOpen,
-  isDarkMode,
-  toggleTheme,
 }: {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  isDarkMode: boolean;
-  toggleTheme: () => void;
 }) {
+  const [clockOpen, setClockOpen] = useState(false);
+
   if (!isOpen) return null;
 
   return (
@@ -55,10 +81,21 @@ function MobileLiquidMenu({
         <a href="/contact" aria-label="Open contact" onClick={() => setIsOpen(false)}>
           <MessageCircle size={16} strokeWidth={2} />
         </a>
-        <button type="button" aria-label="Toggle dark and light mode" onClick={toggleTheme}>
-          {isDarkMode ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
+        <button
+          type="button"
+          aria-label="Show current time"
+          onClick={() => setClockOpen((value) => !value)}
+        >
+          <Clock3 size={16} strokeWidth={2} />
         </button>
       </div>
+
+      {clockOpen && (
+        <div className="projects-mobile-menu__clock-popover" aria-live="polite">
+          <span>Local time</span>
+          <MenuClock />
+        </div>
+      )}
 
       <div className="projects-mobile-menu__divider" />
 
@@ -80,29 +117,9 @@ function MobileLiquidMenu({
 
 export default function Projects() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [px, setPx] = useState(0);
   const [py, setPy] = useState(0);
   const frameRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const active =
-      document.documentElement.classList.contains("dark") ||
-      document.body.classList.contains("dark-mode");
-
-    setIsDarkMode(active);
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode((current) => {
-      const next = !current;
-
-      document.documentElement.classList.toggle("dark", next);
-      document.body.classList.toggle("dark-mode", next);
-
-      return next;
-    });
-  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -427,6 +444,21 @@ export default function Projects() {
           overflow: hidden;
         }
 
+        .projects-clean-card__visual img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .projects-clean-card__visual.has-image::after {
+          display: none;
+        }
+
+        .projects-clean-card__visual.larana {
+          background: #111827;
+        }
+
         .projects-clean-card__visual.nexora,
         .projects-clean-card__visual.pulse,
         .projects-clean-card__visual.motion {
@@ -600,8 +632,6 @@ export default function Projects() {
       <MobileLiquidMenu
         isOpen={menuOpen}
         setIsOpen={setMenuOpen}
-        isDarkMode={isDarkMode}
-        toggleTheme={toggleTheme}
       />
 
       <div className="projects-clean-inner">
@@ -617,10 +647,18 @@ export default function Projects() {
         <div className="projects-clean-grid">
           {allProjects.map((project) => (
             <article className="projects-clean-card" key={project.title}>
-              <div
-                className={`projects-clean-card__visual ${project.visual}`}
+              <a
+                className={`projects-clean-card__visual ${project.visual} ${project.image ? "has-image" : ""}`}
                 data-title={project.title}
-              />
+                href={project.link || "/projects"}
+                target={project.link?.startsWith("http") ? "_blank" : undefined}
+                rel={project.link?.startsWith("http") ? "noreferrer" : undefined}
+                aria-label={`View ${project.title}`}
+              >
+                {project.image ? (
+                  <img src={project.image} alt={project.title} />
+                ) : null}
+              </a>
 
               <div className="projects-clean-card__content">
                 <span className="projects-clean-card__number">{project.number}</span>
