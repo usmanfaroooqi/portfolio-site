@@ -1,31 +1,31 @@
 const selectedProjects = [
   {
     number: "01",
-    title: "LARANA, INC",
-    tags: "Business Card • Real Estate • Brand Collateral",
-    image: "/projects/larana-real-estate-card.jpg",
-    theme: "larana",
+    title: "Social Media Designs",
+    tags: "Social Media • Product Design • Creative Posts",
+    image: "/projects/social-media-designs.jpg",
+    theme: "social-media-designs",
   },
   {
     number: "02",
-    title: "LUMINA",
-    tags: "Branding • Packaging • Art Direction",
-    image: "",
-    theme: "lumina",
+    title: "Brand Identity",
+    tags: "Logo Design • Fitness Branding • Visual Identity",
+    image: "/projects/brand-identity.jpg",
+    theme: "brand-identity",
   },
   {
     number: "03",
-    title: "AUREA",
-    tags: "Branding • Print • Art Direction",
-    image: "",
-    theme: "aurea",
+    title: "Social Media Campaign",
+    tags: "Islamic Design • Educational Content • Campaign Design",
+    image: "/projects/social-media-campaign-quran.jpg",
+    theme: "social-media-campaign-quran",
   },
   {
     number: "04",
-    title: "PULSE",
-    tags: "App Design • UI/UX • Branding",
-    image: "",
-    theme: "pulse",
+    title: "Social Media Campaign",
+    tags: "Academy Branding • Admissions Campaign • Social Media",
+    image: "/projects/social-media-campaign-academy.jpg",
+    theme: "social-media-campaign-academy",
   },
 ];
 
@@ -153,7 +153,7 @@ export default function SelectedWorkFinal() {
           width: 100%;
           height: 100%;
           display: block;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           background: #eef3fb;
         }
@@ -170,6 +170,8 @@ export default function SelectedWorkFinal() {
           font-weight: 850;
           letter-spacing: -0.06em;
           text-transform: uppercase;
+          text-align: center;
+          padding: 24px;
         }
 
         .sw-final-card__body {
@@ -304,8 +306,8 @@ export default function SelectedWorkFinal() {
             <h2 className="sw-final__title">Selected Work</h2>
 
             <p className="sw-final__description">
-              A few focused projects across branding, packaging, digital design,
-              and visual identity.
+              A focused collection of real design projects across social media,
+              branding, campaign design, and visual identity.
             </p>
           </div>
         </div>
@@ -314,7 +316,7 @@ export default function SelectedWorkFinal() {
           {selectedProjects.map((project) => (
             <article
               className={`sw-final-card sw-final-card--${project.theme}`}
-              key={project.title}
+              key={project.number}
             >
               <div className="sw-final-card__visual">
                 {project.image ? (
