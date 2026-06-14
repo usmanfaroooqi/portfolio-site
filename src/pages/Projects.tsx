@@ -16,59 +16,31 @@ import { DustLayer } from "@/components/DustLayer";
 const allProjects = [
   {
     number: "01",
-    title: "LARANA, INC",
-    cats: "Business Card • Real Estate • Brand Collateral",
-    visual: "larana",
-    image: "/projects/larana-real-estate-card.jpg",
+    title: "Social Media Designs",
+    cats: "Social Media • Product Design • Creative Posts",
+    visual: "social-media-designs",
+    image: "/projects/social-media-designs.jpg",
   },
   {
     number: "02",
-    title: "Lumina",
-    cats: "Branding • Packaging • Art Direction",
-    visual: "lumina",
-    image: "",
+    title: "Brand Identity",
+    cats: "Logo Design • Fitness Branding • Visual Identity",
+    visual: "brand-identity",
+    image: "/projects/brand-identity.jpg",
   },
   {
     number: "03",
-    title: "Aurea",
-    cats: "Branding • Print • Art Direction",
-    visual: "aurea",
-    image: "",
+    title: "Social Media Campaign",
+    cats: "Islamic Design • Educational Content • Campaign Design",
+    visual: "social-media-campaign-quran",
+    image: "/projects/social-media-campaign-quran.jpg",
   },
   {
     number: "04",
-    title: "Pulse",
-    cats: "App Design • UI/UX • Branding",
-    visual: "pulse",
-    image: "",
-  },
-  {
-    number: "05",
-    title: "Orbit Studio",
-    cats: "Branding • Visual Identity",
-    visual: "orbit",
-    image: "",
-  },
-  {
-    number: "06",
-    title: "Nova Cafe",
-    cats: "Packaging • Social Media",
-    visual: "nova",
-    image: "",
-  },
-  {
-    number: "07",
-    title: "BlueMark",
-    cats: "Logo Design • Brand System",
-    visual: "blue",
-    image: "",
-  },
-  {
-    number: "08",
-    title: "Motion Lab",
-    cats: "Motion Graphics • Digital",
-    visual: "motion",
-    image: "",
+    title: "Social Media Campaign",
+    cats: "Academy Branding • Admissions Campaign • Social Media",
+    visual: "social-media-campaign-academy",
+    image: "/projects/social-media-campaign-academy.jpg",
   },
 ];
 
@@ -492,7 +464,7 @@ export default function Projects() {
           width: 100%;
           height: 100%;
           display: block;
-          object-fit: contain;
+          object-fit: cover;
           object-position: center;
           background: #eef3fb;
         }
@@ -644,13 +616,13 @@ export default function Projects() {
         <h1 className="projects-clean-title">All Projects</h1>
 
         <p className="projects-clean-intro">
-          A wider collection of branding, packaging, UI/UX, social media, and
-          visual identity projects.
+          A real collection of social media designs, campaign visuals, brand
+          identity systems, and creative digital design work.
         </p>
 
         <div className="projects-clean-grid">
           {allProjects.map((project) => (
-            <article className="projects-clean-card" key={project.title}>
+            <article className="projects-clean-card" key={project.number}>
               <div className={`projects-clean-card__visual ${project.visual}`}>
                 {project.image ? (
                   <img src={project.image} alt={project.title} />
@@ -666,9 +638,7 @@ export default function Projects() {
                   {project.number}
                 </span>
 
-                <h2 className="projects-clean-card__title">
-                  {project.title}
-                </h2>
+                <h2 className="projects-clean-card__title">{project.title}</h2>
 
                 <p className="projects-clean-card__cats">{project.cats}</p>
               </div>
